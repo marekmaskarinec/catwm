@@ -1,4 +1,4 @@
-CFLAGS+= -Wall
+CFLAGS+= -Wall -Wextra -Werror -Wno-deprecated-declarations -Wno-unused-parameter -Wno-sign-compare
 LDADD+= -lX11 
 LDFLAGS=
 EXEC=catwm
@@ -6,11 +6,9 @@ EXEC=catwm
 PREFIX?= /usr
 BINDIR?= $(PREFIX)/bin
 
-CC=gcc
-
 all: $(EXEC)
 
-catwm: catwm.o
+$(EXEC): catwm.o
 	$(CC) $(LDFLAGS) -Os -o $@ $+ $(LDADD)
 
 install: all

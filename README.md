@@ -14,6 +14,10 @@ Summary
 catwm is a very simple and lightweight tiling window manager.
 I will try to stay under 1000 SLOC.
 
+This is my fork. I still don't know how far I will go with it, but
+I definitely want to add some new layouts. I won't have staying under
+1000 SLOC as my goal, but I will try to not increase the loc count a lot.
+
 Status
 ------
  

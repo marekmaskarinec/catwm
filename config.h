@@ -55,18 +55,21 @@ const char* volup[]	= {"amixer","set","PCM","5\%+",NULL};
 	{  MOD|ShiftMask,   K,						  client_to_desktop, {.i = N}},
 
 // Shortcuts
+// This is a mess because I switched spaces to tabs.
 static struct key keys[] = {
 	// MOD			  KEY						 FUNCTION		ARGS
-	{  MOD,			 XK_h,					   decrease,	   {NULL}},
-	{  MOD,			 XK_l,					   increase,	   {NULL}},
-	{  MOD,			 XK_x,					   kill_client,	{NULL}},
-	{  MOD,			 XK_j,					   next_win,	   {NULL}},
-	{  MOD,			 XK_Tab,					 next_win,	   {NULL}},
-	{  MOD,			 XK_k,					   prev_win,	   {NULL}},
+	{  MOD,			 XK_h, decrease,	   {NULL}},
+	{  MOD,			 XK_l, increase,	   {NULL}},
+	{  MOD|ShiftMask, XK_q, kill_client, {NULL}},
+	{  MOD,			 XK_j, next_win,	   {NULL}},
+	{  MOD,			 XK_Tab, next_win,	   {NULL}},
+	{  MOD,			 XK_k, prev_win,	   {NULL}},
 	{  MOD|ShiftMask,   XK_j,					   move_up,		{NULL}},
 	{  MOD|ShiftMask,   XK_k,					   move_down,	  {NULL}},
 	{  MOD,			 XK_Return,				  swap_master,	{NULL}},
-	{  MOD,			 XK_space,				   switch_mode,	{NULL}},
+	{  MOD,           XK_t,      switch_mode, {.i=0}},
+	{  MOD,           XK_m,      switch_mode, {.i=1}},
+	{  MOD,           XK_g,      switch_mode, {.i=2}},
 	{  MOD,			 XK_c,					   spawn,		  {.com = lockcmd}},
 	{  0,			   XF86XK_AudioNext,		   spawn,		  {.com = next}},
 	{  0,			   XF86XK_AudioPrev,		   spawn,		  {.com = prev}},

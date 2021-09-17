@@ -601,8 +601,8 @@ void swap_master() {
 	}
 }
 
-void switch_mode() {
-	mode = (mode == 0) ? 1:0;
+void switch_mode(Arg a) {
+	mode = a.i;
 	tile();
 	update_current();
 }
@@ -632,6 +632,29 @@ void tile() {
 			case 1:
 				for(c=head;c;c=c->next) {
 					XMoveResizeWindow(dis,c->win,0,0,sw,sh);
+				}
+				break;
+			case 2:
+				for(c=head->next;c;c=c->next)
+					n++;
+
+				int rows;
+				for (rows=0; rows * rows >= n; rows++)
+					;
+
+				int
+					w = sw/rows,
+					h = sh/rows,
+					row = 0,
+					coll = 0;
+				for (c=head;c;c=c->next) {
+					XMoveResizeWindow(
+						dis, c->win, w * coll, h * row, w * (coll+1), h * (row+1));
+
+					if (coll >= rows-1) {
+						row++;
+						coll = 0;
+					}
 				}
 				break;
 			default:
