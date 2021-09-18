@@ -646,7 +646,7 @@ void tile() {
 
 		if (n==2) {
 			XMoveResizeWindow(dis, head->win, 0, 0, sw/2, sh);
-			XMoveResizeWindow(dis, head->next->win, sw/2, 0, sw, sh);
+			XMoveResizeWindow(dis, head->next->win, sw/2, 0, sw/2, sh);
 			break;
 		}
 
