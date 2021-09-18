@@ -77,12 +77,12 @@ static void change_desktop(const Arg arg);
 static void client_to_desktop(const Arg arg);
 static void configurenotify(XEvent *e);
 static void configurerequest(XEvent *e);
-static void decrease();
+static void decrease(Arg a);
 static void destroynotify(XEvent *e);
 static void die(const char* e);
 static unsigned long getcolor(const char* color);
 static void grabkeys();
-static void increase();
+static void increase(Arg a);
 static void keypress(XEvent *e);
 static void kill_client();
 static void maprequest(XEvent *e);
@@ -226,9 +226,9 @@ void configurerequest(XEvent *e) {
 	XConfigureWindow(dis, ev->window, ev->value_mask, &wc);
 }
 
-void decrease() {
+void decrease(Arg a) {
 	if(master_size > 50) {
-		master_size -= 10;
+		master_size -= a.i;
 		tile();
 	}
 }
@@ -279,9 +279,9 @@ void grabkeys() {
 	}
 }
 
-void increase() {
+void increase(Arg a) {
 	if(master_size < sw-50) {
-		master_size += 10;
+		master_size += a.i;
 		tile();
 	}
 }
@@ -555,6 +555,9 @@ void setup() {
 	
 	// To catch maprequest and destroynotify (if other wm running)
 	XSelectInput(dis,root,SubstructureNotifyMask|SubstructureRedirectMask);
+
+	const char *cmd[] = {autostart, NULL};
+	spawn((Arg){.com = cmd});
 }
 
 void sigchld(int unused) {
@@ -612,11 +615,12 @@ void tile() {
 	int n = 0;
 	int y = 0;
 
-	// If only one window
-	if(head && !head->next) {
-		XMoveResizeWindow(dis,head->win,0,0,sw-2,sh-2);
-	} else if (!head) {
+	if (!head)
 		return;
+
+	// If only one window
+	if(!head->next) {
+		XMoveResizeWindow(dis,head->win,0,0,sw-2,sh-2);
 	}
 
 	switch(mode) {
@@ -640,7 +644,7 @@ void tile() {
 		for(c=head;c;c=c->next)
 			n++;
 
-		if (n<=2) {
+		if (n==2) {
 			XMoveResizeWindow(dis, head->win, 0, 0, sw/2, sh);
 			XMoveResizeWindow(dis, head->next->win, sw/2, 0, sw, sh);
 			break;
