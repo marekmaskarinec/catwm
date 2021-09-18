@@ -1,5 +1,6 @@
 CATWM
 =====
+```
 
      /\___/\
     ( o   o )  Made by cat...
@@ -7,16 +8,14 @@ CATWM
     (        )            ... for cat!
     (         )
     (          ))))))________________ Cute And Tiny Window Manager
+```
+
+!!! this is my fork !!!
 
 Summary
 -------
 
 catwm is a very simple and lightweight tiling window manager.
-I will try to stay under 1000 SLOC.
-
-This is my fork. I still don't know how far I will go with it, but
-I definitely want to add some new layouts. I won't have staying under
-1000 SLOC as my goal, but I will try to not increase the loc count a lot.
 
 Status
 ------
@@ -29,8 +28,8 @@ Status
 Modes
 -----
 
-It allow the "normal" modes of tiling window managers:
-
+It allows for master stack, grid mode and monocle mode.
+```
     --------------
     |        |___|
     |        |___|
@@ -38,8 +37,7 @@ It allow the "normal" modes of tiling window managers:
     |        |___|
     |        |___|
     --------------
-
-and fullscreen mode
+```
 
 There is no horizontal stack because I never use it. But if someone is interested in, it's very easy to add.
 
