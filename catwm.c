@@ -613,53 +613,61 @@ void tile() {
 	int y = 0;
 
 	// If only one window
-	if(head != NULL && head->next == NULL) {
+	if(head && !head->next) {
 		XMoveResizeWindow(dis,head->win,0,0,sw-2,sh-2);
+	} else if (!head) {
+		return;
 	}
-	else if(head != NULL) {
-		switch(mode) {
-			case 0:
-				// Master window
-				XMoveResizeWindow(dis,head->win,0,0,master_size-2,sh-2);
 
-				// Stack
-				for(c=head->next;c;c=c->next) ++n;
-				for(c=head->next;c;c=c->next) {
-					XMoveResizeWindow(dis,c->win,master_size,y,sw-master_size-2,(sh/n)-2);
-					y += sh/n;
-				}
-				break;
-			case 1:
-				for(c=head;c;c=c->next) {
-					XMoveResizeWindow(dis,c->win,0,0,sw,sh);
-				}
-				break;
-			case 2:
-				for(c=head->next;c;c=c->next)
-					n++;
+	switch(mode) {
+	case 0:
+		// Master window
+		XMoveResizeWindow(dis,head->win,0,0,master_size-2,sh-2);
 
-				int rows;
-				for (rows=0; rows * rows >= n; rows++)
-					;
-
-				int
-					w = sw/rows,
-					h = sh/rows,
-					row = 0,
-					coll = 0;
-				for (c=head;c;c=c->next) {
-					XMoveResizeWindow(
-						dis, c->win, w * coll, h * row, w * (coll+1), h * (row+1));
-
-					if (coll >= rows-1) {
-						row++;
-						coll = 0;
-					}
-				}
-				break;
-			default:
-				break;
+		// Stack
+		for(c=head->next;c;c=c->next) ++n;
+		for(c=head->next;c;c=c->next) {
+			XMoveResizeWindow(dis,c->win,master_size,y,sw-master_size-2,(sh/n)-2);
+			y += sh/n;
 		}
+		break;
+	case 1:
+		for(c=head;c;c=c->next) {
+			XMoveResizeWindow(dis,c->win,0,0,sw,sh);
+		}
+		break;
+	case 2:
+		for(c=head;c;c=c->next)
+			n++;
+
+		if (n<=2) {
+			XMoveResizeWindow(dis, head->win, 0, 0, sw/2, sh);
+			XMoveResizeWindow(dis, head->next->win, sw/2, 0, sw, sh);
+			break;
+		}
+
+		int rows;
+		for (rows=0; rows * rows < n; rows++)
+			;
+
+		int
+			w = sw/rows,
+			h = sh/rows,
+			row = 0,
+			coll = 0;
+		for (c=head;c;c=c->next) {
+			XMoveResizeWindow(
+				dis, c->win, w * coll, h * row, w, h);
+
+			coll++;
+			if (coll >= rows) {
+				row++;
+				coll = 0;
+			}
+		}
+		break;
+	default:
+		break;
 	}
 }
 
